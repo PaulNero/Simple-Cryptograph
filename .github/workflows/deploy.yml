@@ -33,7 +33,7 @@ jobs:
         script: |
           cd ~/projects/bots/Simple-Cryptograph
           echo "TELEGRAM_BOT_TOKEN=${{ secrets.TELEGRAM_BOT_TOKEN }}" > .env
-          echo "KDF_ITERATIONS=${{ secrets.KDF_ITERATIONS }}" > .env
+          echo "KDF_ITERATIONS=${{ secrets.KDF_ITERATIONS }}" >> .env
           git pull origin main || true
           docker-compose down || true
           docker system prune -f
