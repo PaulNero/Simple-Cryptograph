@@ -34,7 +34,7 @@ pip install -r requirements.txt
 Создайте файл `.env` и добавьте в него API токен вашего бота:
 
 ```plaintext
-TOKEN=your_telegram_bot_token
+TELEGRAM_BOT_TOKEN=your_telegram_bot_TELEGRAM_BOT_TOKEN
 ```
 
 ### 4. Запуск бота

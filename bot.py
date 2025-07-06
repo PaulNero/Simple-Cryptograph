@@ -12,9 +12,10 @@ import base64
 
 load_dotenv()
 
-API_TOKEN = os.getenv("TOKEN")
+API_TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
+KDF_ITERATIONS = int(os.getenv("KDF_ITERATIONS"))
 
-bot = Bot(token=API_TOKEN)
+bot = Bot(TELEGRAM_BOT_TOKEN=API_TELEGRAM_BOT_TOKEN)
 dp = Dispatcher(bot)
 dp.middleware.setup(LoggingMiddleware())
 
@@ -34,7 +35,7 @@ def encrypt(message, password):
         algorithm=hashes.SHA256(),
         length=32,
         salt=salt,
-        iterations=100000,
+        iterations=KDF_ITERATIONS,
         backend=default_backend()
     )
     key = kdf.derive(password.encode())
@@ -44,14 +45,14 @@ def encrypt(message, password):
     ciphertext = encryptor.update(message.encode()) + encryptor.finalize()
     return base64.urlsafe_b64encode(salt + iv + encryptor.tag + ciphertext).decode()
 
-def decrypt(token, password):
-    data = base64.urlsafe_b64decode(token)
+def decrypt(TELEGRAM_BOT_TOKEN, password):
+    data = base64.urlsafe_b64decode(TELEGRAM_BOT_TOKEN)
     salt, iv, tag, ciphertext = data[:16], data[16:28], data[28:44], data[44:]
     kdf = PBKDF2HMAC(
         algorithm=hashes.SHA256(),
         length=32,
         salt=salt,
-        iterations=100000,
+        iterations=KDF_ITERATIONS,
         backend=default_backend()
     )
     key = kdf.derive(password.encode())
