@@ -12,10 +12,10 @@ import base64
 
 load_dotenv()
 
-API_TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
+TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
 KDF_ITERATIONS = int(os.getenv("KDF_ITERATIONS"))
 
-bot = Bot(TELEGRAM_BOT_TOKEN=API_TELEGRAM_BOT_TOKEN)
+bot = Bot(token=TELEGRAM_BOT_TOKEN)
 dp = Dispatcher(bot)
 dp.middleware.setup(LoggingMiddleware())
 
